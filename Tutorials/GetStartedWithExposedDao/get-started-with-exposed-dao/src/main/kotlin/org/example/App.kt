@@ -1,7 +1,30 @@
 package org.example
 
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 
 fun main() {
     Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
+
+    transaction {
+        SchemaUtils.create(Tasks)
+
+        val task1 = Task.new {
+            title = "Learn Exposed DAO"
+            description = "Follow the DAO tutorial"
+        }
+
+        val task2 = Task.new {
+            title = "Read The Hobbit"
+            description = "Read chapter one"
+            isCompleted = true
+        }
+
+        println("Created new tasks with ids ${task1.id} and ${task2.id}")
+
+        val completed = Task.find { Tasks.isCompleted eq true }.toList()
+        println("Completed tasks: ${completed.count()}")
+    }
 }
