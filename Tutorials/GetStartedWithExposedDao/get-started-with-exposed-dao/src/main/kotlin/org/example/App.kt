@@ -29,5 +29,14 @@ fun main() {
 
         val completed = Task.find { Tasks.isCompleted eq true }.toList()
         println("Completed tasks: ${completed.count()}")
+
+        // Update
+        task1.title = "Try Exposed DAO"
+        task1.isCompleted = true
+        println("Updated task1: $task1")
+
+        // Delete
+        task2.delete()
+        println("Remaining tasks: ${Task.all().toList()}")
     }
 }
