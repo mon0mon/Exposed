@@ -2,12 +2,15 @@ package org.example
 
 import org.jetbrains.exposed.v1.core.StdOutSqlLogger
 import org.jetbrains.exposed.v1.core.count
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+import org.jetbrains.exposed.v1.jdbc.update
 
 fun main() {
     Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
@@ -41,6 +44,22 @@ fun main() {
         Tasks.select(Tasks.id.count(), Tasks.isCompleted)
             .groupBy(Tasks.isCompleted)
             .forEach { println("${it[Tasks.isCompleted]}: ${it[Tasks.id.count()]}") }
+
+        println("Remaining tasks: ${Tasks.selectAll().toList()}")
+
+        // Task 업데이트
+        Tasks.update({ Tasks.id eq taskId }) {
+            it[isCompleted] = true
+        }
+
+        val updatedTask = Tasks.select(Tasks.isCompleted)
+            .where(Tasks.id eq taskId)
+            .single()
+
+        println("Updated task details: $updatedTask")
+
+        // Task 삭제
+        Tasks.deleteWhere { id eq secondTaskId }
 
         println("Remaining tasks: ${Tasks.selectAll().toList()}")
     }
