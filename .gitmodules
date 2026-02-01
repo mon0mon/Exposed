@@ -1,0 +1,3 @@
+[submodule "Tutorials/GetStartedWithExposed/ref"]
+	path = Tutorials/GetStartedWithExposed/ref
+	url = git@github.com:JetBrains/Exposed.git
