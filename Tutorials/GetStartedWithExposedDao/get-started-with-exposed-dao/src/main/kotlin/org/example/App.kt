@@ -1,5 +1,6 @@
 package org.example
 
+import org.jetbrains.exposed.v1.core.StdOutSqlLogger
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
@@ -9,6 +10,8 @@ fun main() {
     Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
 
     transaction {
+        addLogger(StdOutSqlLogger)
+
         SchemaUtils.create(Tasks)
 
         val task1 = Task.new {
