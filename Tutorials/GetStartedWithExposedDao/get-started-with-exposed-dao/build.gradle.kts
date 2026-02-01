@@ -10,6 +10,11 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.h2)
+
     testImplementation(kotlin("test"))
 }
 
