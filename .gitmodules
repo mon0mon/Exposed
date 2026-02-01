@@ -1,3 +1,6 @@
 [submodule "Tutorials/GetStartedWithExposed/ref"]
 	path = Tutorials/GetStartedWithExposed/ref
 	url = git@github.com:JetBrains/Exposed.git
+[submodule "Tutorials/GetStartedWithExposedDao/ref"]
+	path = Tutorials/GetStartedWithExposedDao/ref
+	url = git@github.com:JetBrains/Exposed.git
